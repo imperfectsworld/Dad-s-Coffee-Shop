@@ -68,9 +68,8 @@ namespace DAD_s_Coffee_Shop_Lab
 
         public override string ToString()
         {
-            return $"{Name}\t{Category}\t{Description}\t{Price}";
+            return String.Format("{0,15} {1,20} {2,45} {3,10}", $"{Name}|", $"{Category}|", $"{Description}|", $"{Price}|");
         }
-       
 
         public static void ListProducts()
         {
