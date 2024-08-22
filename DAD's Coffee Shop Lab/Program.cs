@@ -1,5 +1,6 @@
 ﻿
 using DAD_s_Coffee_Shop_Lab;
+using System.Xml.Serialization;
 
 Console.WriteLine("Hello, World!");
 /*
@@ -22,17 +23,36 @@ if (!File.Exists(filePath))
 
 
 string filePath = "../../../coffee.txt";
-StreamWriter tempCoffee = new StreamWriter("coffee.txt");
+
   if (!File.Exists(filePath))
 {
-    
-     foreach (Coffee item in Coffee.products) 
+    StreamWriter tempCoffee = new StreamWriter(filePath);
+    foreach (Coffee item in Coffee.products) 
         {
         tempCoffee.WriteLine(item.ToString()); 
         } 
-    tempCoffee.Close();
+     tempCoffee.Close();
 }
-
-
+//Menu print
 Coffee.ListProducts();
+
+Console.WriteLine("Please select which item you would like to order. (Use number)");
+
+//input order
+string selection = Console.ReadLine();
+int input;
+if(int.TryParse(Console.ReadLine(), out input))
+{
+    while (input > Coffee.products.Count || input < 1)
+    {
+        Console.WriteLine("Enter the valid input");
+    }
+    input--;
+    //return order & print
+    Console.WriteLine($"{Coffee.products[input]}");
+}
+/*else if(Coffee.products.Contains(selection))
+{
+
+}*/
 
