@@ -72,9 +72,11 @@ while (orderProgram)
     {
         Console.Clear();
         GetTotal();
-        Console.WriteLine("Thank you! Come again!");
+
     }
 }
+
+static void Payment()
 
 static void GetTotal()
 {
