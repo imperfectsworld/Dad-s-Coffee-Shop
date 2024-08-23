@@ -22,15 +22,11 @@ namespace DAD_s_Coffee_Shop_Lab
             Rate = _rate;
 
         }
-        
-        public void ShoppingCart(List<Coffee> i )
-        {
-            Console.WriteLine("Enter the quantity:");
-            int quantity = int.Parse(Console.ReadLine());
-          
-        }
 
-        
+        public static List<string> paymentMethod = new()
+    {
+        "Cash","Check","Credit"
+    };
         public static List <Cart> orderList = new List<Cart>();
 
         public override string ToString()
