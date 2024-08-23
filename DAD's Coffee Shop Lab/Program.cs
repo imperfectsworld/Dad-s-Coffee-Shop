@@ -1,5 +1,7 @@
 ﻿
 using DAD_s_Coffee_Shop_Lab;
+using System;
+using System.ComponentModel;
 using System.Xml.Serialization;
 List<Cart> SCart = new List<Cart>();
 string filePath = "../../../coffee.txt";
@@ -50,11 +52,29 @@ else if ((Coffee.products.Any(p => p.Name.Equals(selection, StringComparison.Ord
 {
     Coffee selected = Coffee.products.Find(p => p.Name.Equals(selection, StringComparison.OrdinalIgnoreCase));
     Console.WriteLine($"{selected}");
-    Console.WriteLine("Enter the Quantity:");
-    int quantity = int.Parse(Console.ReadLine());
-    //SCart.Add(selected).ToList();
+    DisplayCart(selected);
+    
 }
 else
 {
     Console.WriteLine("InValid input ");
+}
+
+
+static void DisplayCart(Coffee order)
+{
+    Console.WriteLine("Enter the Quantity:");
+    int quantity = int.Parse(Console.ReadLine());
+    double total = order.Price * quantity;
+    Cart.orderList.Add(new Cart(quantity, order, total ));
+    Console.WriteLine("================================");
+    Console.WriteLine("Name".PadRight(16) + "Quantity\t" + "Subtotal");
+    foreach (Cart o in Cart.orderList)
+    {
+        
+        Console.WriteLine($"{o.Product.Name.PadRight(16)} {o.Quantity}\t\t{o.Rate}");
+
+        
+    }
+
 }

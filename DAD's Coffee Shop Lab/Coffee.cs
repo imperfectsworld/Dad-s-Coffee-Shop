@@ -47,7 +47,7 @@ namespace DAD_s_Coffee_Shop_Lab
 
         //methods
 
-        public static List<Coffee> products = new List<Coffee> { new Coffee("Espresso", "Coffee", "Strong, black coffee", 2.50),
+    public static List<Coffee> products = new List<Coffee> { new Coffee("Espresso", "Coffee", "Strong, black coffee", 2.50),
     new Coffee("Cappuccino", "Coffee", "Espresso with steamed milk and foam", 3.75),
     new Coffee("Latte", "Coffee", "Espresso with steamed milk", 3.50),
     new Coffee("Mocha", "Coffee", "Espresso with chocolate and steamed milk", 4.00),
@@ -59,7 +59,7 @@ namespace DAD_s_Coffee_Shop_Lab
     new Coffee("Hot Chocolate", "Beverage", "Rich chocolate with steamed milk", 3.00),
     new Coffee("Iced Coffee", "Cold Beverage", "Chilled coffee with ice", 3.00),
     new Coffee("Iced Tea", "Cold Beverage", "Chilled tea with ice", 2.50)};
-
+        
         public override string ToString()
         {
             return String.Format("{0,15} {1,20} {2,45} {3,10}", $"{Name}|", $"{Category}|", $"{Description}|", $"{Price}|");
