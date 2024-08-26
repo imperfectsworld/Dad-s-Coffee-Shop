@@ -25,7 +25,6 @@ if (!File.Exists(filePath))
 
 
 */
-double tip = 0;
 if (!File.Exists(filePath))
 {
     StreamWriter tempCoffee = new StreamWriter(filePath);
@@ -74,12 +73,13 @@ while (orderProgram)
     if (orderProgram == false)
     {
         Console.Clear();
-        double finalTotal = GetTotal();
-        ChoosePayment(finalTotal);
+        (double finalTotal,double tip)= GetTotal();
+        ChoosePayment(finalTotal,tip);
+       
     }
 }
 
-static void ChoosePayment(double pay)
+static void ChoosePayment(double pay,double tip)
 {
     int index = 0;
     string choice ="";
@@ -92,7 +92,7 @@ static void ChoosePayment(double pay)
     string cardNum = "";
     string expiration;
     string cvv;
-   
+  
 
     foreach (string s in Cart.paymentMethod)
     {
@@ -163,6 +163,7 @@ static void ChoosePayment(double pay)
                 }
 
             }
+            DisplayRecipt(tip);
             runProgram = false;
 
         }
@@ -186,9 +187,12 @@ static void ChoosePayment(double pay)
                     IsValid = true;
                 }
             }
-           
+            Console.Clear();
+            DisplayRecipt(tip);
+            string last = checkNum.Substring(checkNum.Length - 4);
+            Console.WriteLine($"Check Number : ****{last}");
             runProgram = false;
-
+           
 
         }
         else if (choice == "credit")
@@ -220,6 +224,7 @@ static void ChoosePayment(double pay)
                     IsValid = true;
                 }
             }
+            DisplayRecipt(tip);
             runProgram = false;
         }
         else
@@ -234,7 +239,7 @@ static void ChoosePayment(double pay)
     
 }
 
-static double GetTotal()
+static (double grandTotal,double tip) GetTotal()
 {
     double total = 0;
     double tax = 0.06;
@@ -254,7 +259,7 @@ static double GetTotal()
     grandTotal = total + (total * tax) + tip;
     Console.WriteLine($"\nTotal: {Math.Round(grandTotal,2)}");
 
-    return grandTotal;
+    return (grandTotal,tip);
 }
 
     static void DisplayCart(Coffee order)
@@ -274,7 +279,7 @@ static double GetTotal()
         }
 
     }
-static void DisplayRecipt()
+static void DisplayRecipt(double tip)
 {
     double total = 0;
     double tax = 0.06;
@@ -289,10 +294,9 @@ static void DisplayRecipt()
     }
     Console.WriteLine($"\nSubtotal: ${total}");
     Console.WriteLine($"Sales Tax: {total * tax}");
-    Console.WriteLine("Enter a tip:");
-    double tip = StaticLecture.Validator.GetPositiveInputDouble();
+    Console.WriteLine($"Tip:${tip}");
     grandTotal = total + (total * tax) + tip;
-    Console.WriteLine($"\nTotal: {Math.Round(grandTotal, 2)}");
+    Console.WriteLine($"\nTotal:$ {Math.Round(grandTotal, 2)}");
 
     
 }
