@@ -91,33 +91,44 @@ static void ChoosePayment(double pay)
     string cardNum = "";
     string expiration;
     string cvv;
+   
+
     foreach (string s in Cart.paymentMethod)
     {
+
         Console.WriteLine($"{index+1}. {s}");
         index++;
     }
+    
     while (runProgram)
     {
-        if (int.TryParse(Console.ReadLine(), out int userInput))
+        string paySelect = Console.ReadLine().ToLower().Trim();
+        if (int.TryParse(paySelect, out int userInput) && userInput <= Cart.paymentMethod.Count && userInput > 0)
         {
-            while (userInput > Cart.paymentMethod.Count || userInput < 0)
-            {
-                Console.WriteLine("Please enter a valid input");
-            }
+            
+            //while (userInput > Cart.paymentMethod.Count || userInput < 0)
+            //{
+            //    Console.WriteLine("Please enter a valid input");
+            //    paySelect = Console.ReadLine().ToLower().Trim();
+                
+            //}
             userInput--;
             choice = Cart.paymentMethod[userInput];
             // Console.WriteLine(choice);
         }
-        else if (Cart.paymentMethod.Any(p => p.Equals(Console.ReadLine(), StringComparison.OrdinalIgnoreCase)))
+        else if (Cart.paymentMethod.Any(p => p.Equals(paySelect, StringComparison.OrdinalIgnoreCase)))
         {
-            choice = Console.ReadLine();
-            Console.WriteLine(choice);
+            choice = paySelect;
+            
         }
         else
         {
-            Console.WriteLine("Invalid Input");
+            Console.WriteLine("Invalid Input, Please try again");
+            continue;
+            
+            
         }
-        if (choice == "Cash")
+        if (choice == "cash")
         {
             while (IsValid)
             {
@@ -146,7 +157,7 @@ static void ChoosePayment(double pay)
             runProgram = false;
 
         }
-        else if (choice == "Check")
+        else if (choice == "check")
         {
             string pattern = @"^[A-Z]{0,3}\d{8,12}[A-Z]{0,3}$";
             Console.WriteLine("Enter the Check Number:");
@@ -171,7 +182,7 @@ static void ChoosePayment(double pay)
 
 
         }
-        else if (choice == "Credit")
+        else if (choice == "credit")
         {
             
             string pattern = @"^\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}(\d{1,3})?$";
