@@ -9,22 +9,7 @@ using System.Text.RegularExpressions;
 using System.Transactions;
 List<Cart> SCart = new List<Cart>();
 string filePath = "../../../coffee.txt";
-Console.WriteLine("Hello, World!");
-/*
 
-
-//if file doesn't exist
-if (!File.Exists(filePath))
-{
-   
-    //name|grade|age
-    tempWriter.WriteLine("Justin Jones|12|18");
-    tempWriter.WriteLine("Ethan Thomas|10|16");
-   
-}
-
-
-*/
 if (!File.Exists(filePath))
 {
     StreamWriter tempCoffee = new StreamWriter(filePath);
@@ -42,40 +27,65 @@ while (orderProgram)
     Console.WriteLine("Enter the Menu(number /Coffee Name)");
     string? selection = Console.ReadLine();
     int input;
-    //input order
-    if (int.TryParse(selection, out input))
+    while (selection != "employee")
     {
-        while (input > Coffee.products.Count || input < 1)
+        //input order
+        if (int.TryParse(selection, out input))
         {
-            Console.WriteLine("Enter the valid input");
-            input = int.Parse(Console.ReadLine());
+            while (input > Coffee.products.Count || input < 1)
+            {
+                Console.WriteLine("Enter the valid input");
+                input = int.Parse(Console.ReadLine());
+            }
+            input--;
+            Console.WriteLine($"{Coffee.products[input]}");
+            Coffee selected = Coffee.products[input];
+            DisplayCart(selected);
         }
-        input--;
-        Console.WriteLine($"{Coffee.products[input]}");
-        Coffee selected = Coffee.products[input];
-        DisplayCart(selected);
-    }
 
-    else if ((Coffee.products.Any(p => p.Name.Equals(selection, StringComparison.OrdinalIgnoreCase))))
-    {
-        Coffee selected = Coffee.products.Find(p => p.Name.Equals(selection, StringComparison.OrdinalIgnoreCase));
-        Console.WriteLine($"{selected}");
-        DisplayCart(selected);
+        else if ((Coffee.products.Any(p => p.Name.Equals(selection, StringComparison.OrdinalIgnoreCase))))
+        {
+            Coffee selected = Coffee.products.Find(p => p.Name.Equals(selection, StringComparison.OrdinalIgnoreCase));
+            Console.WriteLine($"{selected}");
+            DisplayCart(selected);
 
-    }
-    else
-    {
-        Console.WriteLine("InValid input ");
-        continue;
-    }
-    orderProgram = StaticLecture.Validator.GetContinue("Would you like to add another item to your order?", "yes", "no");
-    Console.Clear();
-    if (orderProgram == false)
-    {
+        }
+        else
+        {
+            Console.WriteLine("InValid input ");
+            continue;
+        }
+        orderProgram = StaticLecture.Validator.GetContinue("Would you like to add another item to your order?", "yes", "no");
         Console.Clear();
-        (double finalTotal,double tip)= GetTotal();
-        ChoosePayment(finalTotal,tip);
-       
+        if (orderProgram == false)
+        {
+            Console.Clear();
+            (double finalTotal, double tip) = GetTotal();
+            ChoosePayment(finalTotal, tip);
+            Console.WriteLine("New customer: press ENTER.");
+            Console.ReadLine();
+            Console.Clear();
+            Cart.orderList.Clear();
+            orderProgram = true;
+        }
+    }
+
+    Console.WriteLine("Please enter your Employee ID");
+    string? ID = Console.ReadLine();
+    int IDnum;
+    int password;
+    if (int.TryParse(ID, out IDnum))
+    {
+        Console.WriteLine("Please enter your password");
+    }
+    string? pass = Console.ReadLine();
+    if (int.TryParse(pass, out password))
+    {
+        if (IDnum == 0 && password == 0)
+        {
+            foreach (var p in Coffee.products)
+            { Console.WriteLine(p.Name); }
+        }
     }
 }
 
@@ -134,39 +144,31 @@ static void ChoosePayment(double pay,double tip)
         }
         if (choice == "cash")
         {
+            double total = 0;
             while (IsValid)
             {
-                Console.WriteLine("Enter the amount:");
+                Console.Write("Enter the amount: $");
                 cash = StaticLecture.Validator.GetPositiveInputDouble();
-                balance = cash - pay;
+                total += cash;
+                balance = total - pay;
                 if (balance < 0)
                 {
                     Console.WriteLine($"You still owe {Math.Abs(Math.Round(balance, 2))} Please enter the amount:");
-                    double newbalance = StaticLecture.Validator.GetPositiveInputDouble();
-                    double total = newbalance + cash;
-                    double change = total - pay;
-                    if (change >= 0)
-                    {
-                        Console.WriteLine($"Your Change:${Math.Round(change, 2)}");
-                        IsValid = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"You still owe {Math.Abs(Math.Round(change, 2))} Please enter the amount:");
-                    }
-
                 }
                 else
                 {
-                    Console.WriteLine($"Your Change:${Math.Round(balance,2)}");
+                    Console.WriteLine($"Your Change:${Math.Round(balance, 2)}");
                     IsValid = false;
                 }
-
             }
+            Console.WriteLine($"Your Change:${Math.Round(balance, 2)}. Hit ENTER to continue.");
+            Console.ReadLine();
+            Console.Clear();
+            Console.WriteLine($"Your Change: ${Math.Round(balance, 2)}");
             DisplayReceipt(tip);
             runProgram = false;
-
         }
+    
         else if (choice == "check")
         {
             string pattern = @"^[A-Z]{0,3}\d{8,12}[A-Z]{0,3}$";
@@ -224,7 +226,10 @@ static void ChoosePayment(double pay,double tip)
                     IsValid = true;
                 }
             }
+            Console.Clear();
             DisplayReceipt(tip);
+            string last = cardNum.Substring(cardNum.Length - 4);
+            Console.WriteLine($"Card: ************{last}");
             runProgram = false;
         }
         else
@@ -245,7 +250,7 @@ static (double grandTotal,double tip) GetTotal()
     double tax = 0.06;
     double grandTotal = 0;
     Console.WriteLine("DAD's Coffee Roasters Cafe");
-    Console.WriteLine("================================");
+    Console.WriteLine("================================================================");
     Console.WriteLine("Name".PadRight(16) + "Quantity\t" + "Subtotal");
     foreach (Cart t in Cart.orderList)
     {
@@ -253,27 +258,27 @@ static (double grandTotal,double tip) GetTotal()
         Console.WriteLine($"{t.Product.Name.PadRight(16)}" + $"{t.Quantity}\t\t{t.Rate}");
     }
     Console.WriteLine($"\nSubtotal: ${total}");
-    Console.WriteLine($"Sales Tax: {total * tax}");
-    Console.WriteLine("Enter a tip:");
+    Console.WriteLine($"Sales Tax: ${total * tax}");
+    Console.Write("Enter a tip: $");
     double tip = StaticLecture.Validator.GetPositiveInputDouble();
     grandTotal = total + (total * tax) + tip;
-    Console.WriteLine($"\nTotal: {Math.Round(grandTotal,2)}");
+    Console.WriteLine($"\nTotal: ${Math.Round(grandTotal,2)}");
 
     return (grandTotal,tip);
 }
 
-    static void DisplayCart(Coffee order)
+static void DisplayCart(Coffee order)
     {
         Console.WriteLine("Enter the Quantity:");
         int quantity = StaticLecture.Validator.GetPositiveInputInt();
         double total = order.Price * quantity;
         Cart.orderList.Add(new Cart(quantity, order, total));
-        Console.WriteLine("================================");
+        Console.WriteLine("================================================================");
         Console.WriteLine("Name".PadRight(16) + "Quantity\t" + "Subtotal");
         foreach (Cart o in Cart.orderList)
         {
 
-            Console.WriteLine($"{o.Product.Name.PadRight(16)} {o.Quantity}\t\t{o.Rate}");
+            Console.WriteLine($"{o.Product.Name.PadRight(16)} {o.Quantity}\t\t${o.Rate}");
 
 
         }
@@ -285,7 +290,7 @@ static void DisplayReceipt(double tip)
     double tax = 0.06;
     double grandTotal = 0;
     Console.WriteLine("DAD's Coffee Roasters Cafe");
-    Console.WriteLine("================================");
+    Console.WriteLine("================================================================");
     Console.WriteLine("Name".PadRight(16) + "Quantity\t" + "Subtotal");
     foreach (Cart t in Cart.orderList)
     {
@@ -293,10 +298,10 @@ static void DisplayReceipt(double tip)
         Console.WriteLine($"{t.Product.Name.PadRight(16)}" + $"{t.Quantity}\t\t{t.Rate}");
     }
     Console.WriteLine($"\nSubtotal: ${total}");
-    Console.WriteLine($"Sales Tax: {total * tax}");
-    Console.WriteLine($"Tip:${tip}");
+    Console.WriteLine($"Sales Tax: ${total * tax}");
+    Console.WriteLine($"Tip: ${tip}");
     grandTotal = total + (total * tax) + tip;
-    Console.WriteLine($"\nTotal:$ {Math.Round(grandTotal, 2)}");
+    Console.WriteLine($"\nTotal: ${Math.Round(grandTotal, 2)}");
 
     
 }
