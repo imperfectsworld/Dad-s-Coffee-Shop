@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Net.WebSockets;
 using WMPLib;
+using Workshop_coffeeProjectTest;
 
 
 
@@ -27,6 +28,41 @@ if (!File.Exists(filePath))
 bool orderProgram = true;
 while (orderProgram)
 {
+    bool employee = StaticLecture.Validator.GetContinue("Employee Login?", "y", "n");
+    while (employee == true)
+        {
+            Console.WriteLine("Please enter your Employee ID");
+            string? ID = Console.ReadLine();
+            int IDnum;
+            int password;
+            if (int.TryParse(ID, out IDnum))
+            {
+                Console.WriteLine("Please enter your password");
+            }
+            string? pass = Console.ReadLine();
+            if (int.TryParse(pass, out password))
+            {
+                if (IDnum == 0 && password == 0)
+                {
+                    Console.WriteLine("DAD's Coffee Roasters Cafe");
+                    Console.WriteLine("================================");
+                    Console.WriteLine(String.Format("\t{0,30}\t {1,10}\t {2,15}\t", "Stock Item", "Quanity", "Cost/lb"));
+                    Inventory.ListInventory();
+                    Console.WriteLine("Hit ENTER to continue to menu.");
+                    Console.ReadLine();
+                    Console.Clear();
+                    orderProgram = false;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid login credentials.");
+                }
+            }
+           else
+            {
+                Console.WriteLine("Invalid login credentials.");
+            }
+        }
     WindowsMediaPlayer player = new WindowsMediaPlayer();
     player.URL = @"C:\\Users\\imper\\source\\repos\\DAD's Coffee Shop Lab\\DAD's Coffee Shop Lab\\bin\\Debug\\net8.0\\Ambient.wav\";
     player.controls.play();
@@ -59,17 +95,19 @@ while (orderProgram)
             input--;
             Console.WriteLine($"{Coffee.products[input]}");
             Coffee selected = Coffee.products[input];
+            Inventory.DrinkConstructor(selected);
             DisplayCart(selected);
         }
 
         else if ((Coffee.products.Any(p => p.Name.Equals(selection, StringComparison.OrdinalIgnoreCase))))
         {
             Coffee selected = Coffee.products.Find(p => p.Name.Equals(selection, StringComparison.OrdinalIgnoreCase));
+            Inventory.DrinkConstructor(selected);
             Console.WriteLine($"{selected}");
             DisplayCart(selected);
 
         }
-        else
+    else
         {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("InValid input ");

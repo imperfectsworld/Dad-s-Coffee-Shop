@@ -31,18 +31,20 @@ namespace DAD_s_Coffee_Shop_Lab
 
         //methods
 
-    public static List<Coffee> products = new List<Coffee> { new Coffee("Espresso", "Coffee", "Strong, black coffee", 2.50),
-    new Coffee("Cappuccino", "Coffee", "Espresso with steamed milk and foam", 3.75),
-    new Coffee("Latte", "Coffee", "Espresso with steamed milk", 3.50),
-    new Coffee("Mocha", "Coffee", "Espresso with chocolate and steamed milk", 4.00),
-    new Coffee("Macchiato", "Coffee", "Espresso with a dollop of foam", 3.00),
-    new Coffee("Americano", "Coffee", "Espresso with hot water", 2.75),
-    new Coffee("Chai Latte", "Tea", "Spiced tea with steamed milk", 3.25),
-    new Coffee("Green Tea", "Tea", "Refreshing and healthy green tea", 2.25),
-    new Coffee("Herbal Tea", "Tea", "Caffeine-free herbal infusion", 2.50),
-    new Coffee("Hot Chocolate", "Beverage", "Rich chocolate with steamed milk", 3.00),
-    new Coffee("Iced Coffee", "Cold Beverage", "Chilled coffee with ice", 3.00),
-    new Coffee("Iced Tea", "Cold Beverage", "Chilled tea with ice", 2.50)};
+    public static List<Coffee> products = new List<Coffee> {new Coffee("Espresso", "Coffee", "Strong, black coffee", 2.50),
+        new Coffee("Cappuccino", "Coffee", "Espresso with steamed milk and foam", 3.75),
+        new Coffee("Latte", "Coffee", "Espresso with steamed milk", 3.50),
+        new Coffee("Mocha", "Coffee", "Espresso with chocolate and steamed milk", 4.00),
+        new Coffee("Macchiato", "Coffee", "Espresso with a dollop of foam", 3.00),
+        new Coffee("Americano", "Coffee", "Espresso with hot water", 2.75),
+        new Coffee("Chai Latte", "Tea", "Spiced tea with steamed milk", 3.25),
+        new Coffee("Green Tea", "Tea", "Refreshing and healthy green tea", 2.25),
+        new Coffee("Herbal Tea", "Tea", "Caffeine-free herbal infusion", 2.50),
+        new Coffee("Hot Chocolate", "Hot Beverage", "Rich chocolate with steamed milk", 3.00),
+        new Coffee("Iced Coffee", "Iced Coffee Beverage", "Chilled house-blend coffee with ice", 3.00),
+        new Coffee("Cold Brew", "Iced Coffee Beverage", "House blend grounds soaked for 48 hrs", 4.50),
+        new Coffee("Iced Tea", "Iced Tea Beverage", "Chilled black tea with ice", 2.50)
+    };
         
         public override string ToString()
         {

@@ -16,8 +16,8 @@ namespace Workshop_coffeeProjectTest
         public string Component { get; set; }
         public double Quantity { get; set; }
         public double Cost { get; set; }
-        public Inventory(string component, double quantity, double cost) 
-        { 
+        public Inventory(string component, double quantity, double cost)
+        {
             Component = component;
             Quantity = quantity;
             Cost = cost;
@@ -28,7 +28,7 @@ namespace Workshop_coffeeProjectTest
             new Inventory("dark roast beans", 20, 34.00),
             new Inventory("medium roast beans", 20, 32.00),
             new Inventory("light roast beans", 40, 30.00),
-            new Inventory("in-house cold brew concentrate", 20, 38.00),
+            new Inventory("cold brew concentrate", 20, 38.00),
             new Inventory("refrigerated drip coffee", 20, 15.00),
             new Inventory("2% milk", 18.93, 3.00),
             new Inventory("skim milk", 5, 2.50),
@@ -47,7 +47,7 @@ namespace Workshop_coffeeProjectTest
         };
         public override string ToString()
         {
-            return String.Format("{0,15} {2,45} {3,10}", $"{Component}|", $"{Quantity}|", $"{Quantity * Cost}|");
+            return String.Format("\t{0,30}\t {1,10}\t {2,15}\t", $"{Component}|", $"{Quantity}|", $"${Cost}|");
         }
 
         public static void ListInventory()
@@ -58,19 +58,20 @@ namespace Workshop_coffeeProjectTest
             }
         }
 
-        public static void DrinkConstructor(string selected)
+        public static void DrinkConstructor(Coffee selected)
         {
-            if (selected == "espresso")
+            string sold = selected.ToString().ToLower();
+            if (sold == "espresso")
             {
-               Inventory.stock.Where(s => s.Component == "espresso beans")
-                                   .Select(i =>
-                                   {
-                                       i.Quantity -= 1;
-                                       return new
-                                       {
-                                           Quantity = i.Quantity
-                                       };
-                                   });
+                Inventory.stock.Where(s => s.Component == "espresso beans")
+                                    .Select(i =>
+                                    {
+                                        i.Quantity -= 1;
+                                        return new
+                                        {
+                                            Quantity = i.Quantity
+                                        };
+                                    });
                 Inventory.stock.Where(s => s.Component == "cups")
                     .Select(i =>
                     {
@@ -90,7 +91,7 @@ namespace Workshop_coffeeProjectTest
                         };
                     });
             }
-            else if(selected == "cappuccino")
+            else if (sold == "cappuccino")
             {
                 Inventory.stock.Where(s => s.Component == "espresso beans")
                                    .Select(i =>
@@ -129,7 +130,7 @@ namespace Workshop_coffeeProjectTest
                         };
                     });
             }
-            else if(selected == "latte")
+            else if (sold == "latte")
             {
                 Inventory.stock.Where(s => s.Component == "espresso beans")
                                    .Select(i =>
@@ -168,7 +169,7 @@ namespace Workshop_coffeeProjectTest
                         };
                     });
             }
-            else if(selected == "mocha")
+            else if (sold == "mocha")
             {
                 Inventory.stock.Where(s => s.Component == "espresso beans")
                                    .Select(i =>
@@ -216,7 +217,7 @@ namespace Workshop_coffeeProjectTest
                         };
                     });
             }
-            else if(selected == "machiato")
+            else if (sold == "machiato")
             {
                 Inventory.stock.Where(s => s.Component == "espresso beans")
                                    .Select(i =>
@@ -255,7 +256,7 @@ namespace Workshop_coffeeProjectTest
                         };
                     });
             }
-            else if(selected == "americano")
+            else if (sold == "americano")
             {
                 Inventory.stock.Where(s => s.Component == "espresso beans")
                                    .Select(i =>
@@ -294,7 +295,7 @@ namespace Workshop_coffeeProjectTest
                         };
                     });
             }
-            else if(selected == "chair latte")
+            else if (sold == "chair latte")
             {
                 Inventory.stock.Where(s => s.Component == "chai")
                                    .Select(i =>
@@ -333,7 +334,7 @@ namespace Workshop_coffeeProjectTest
                         };
                     });
             }
-            else if(selected == "green tea")
+            else if (sold == "green tea")
             {
                 Inventory.stock.Where(s => s.Component == "ceremony grade matcha")
                                    .Select(i =>
@@ -363,7 +364,7 @@ namespace Workshop_coffeeProjectTest
                                        };
                                    });
             }
-            else if(selected == "herbal tea")
+            else if (sold == "herbal tea")
             {
                 Inventory.stock.Where(s => s.Component == "loose leaf herbal collection")
                                    .Select(i =>
@@ -393,7 +394,7 @@ namespace Workshop_coffeeProjectTest
                                        };
                                    });
             }
-            else if(selected == "hot chocolate")
+            else if (sold == "hot chocolate")
             {
                 Inventory.stock.Where(s => s.Component == "swiss hot chocolate powder")
                                    .Select(i =>
@@ -430,7 +431,7 @@ namespace Workshop_coffeeProjectTest
                        {
                            Quantity = i.Quantity
                        };
-                   }); 
+                   });
                 Inventory.stock.Where(s => s.Component == "lids")
                                    .Select(i =>
                                    {
@@ -441,7 +442,7 @@ namespace Workshop_coffeeProjectTest
                                        };
                                    });
             }
-            else if(selected == "iced coffee")
+            else if (sold == "iced coffee")
             {
                 Inventory.stock.Where(s => s.Component == "refrigerated drip coffee")
                    .Select(i =>
@@ -471,7 +472,7 @@ namespace Workshop_coffeeProjectTest
                                        };
                                    });
             }
-            else if(selected == "cold brew")
+            else if (sold == "cold brew")
             {
                 Inventory.stock.Where(s => s.Component == "in-house cold brew concentrate")
                    .Select(i =>
@@ -501,7 +502,7 @@ namespace Workshop_coffeeProjectTest
                                        };
                                    });
             }
-            else if(selected == "iced tea")
+            else if (sold == "iced tea")
             {
                 Inventory.stock.Where(s => s.Component == "chilled in-house black tea")
                    .Select(i =>
