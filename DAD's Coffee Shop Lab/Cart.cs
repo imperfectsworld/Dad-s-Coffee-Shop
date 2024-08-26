@@ -25,7 +25,7 @@ namespace DAD_s_Coffee_Shop_Lab
 
         public static List<string> paymentMethod = new()
     {
-        "Cash","Check","Credit"
+        "cash","check","credit"
     };
         public static List <Cart> orderList = new List<Cart>();
 

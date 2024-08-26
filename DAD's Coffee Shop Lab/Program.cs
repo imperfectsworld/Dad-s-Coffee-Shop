@@ -86,6 +86,7 @@ static void ChoosePayment(double pay)
     double cash = 0;
     double balance = 0;
     bool IsValid = true;
+    bool runPayment = true;
     bool runProgram = true;
     string checkNum="";
     string cardNum = "";
@@ -99,34 +100,37 @@ static void ChoosePayment(double pay)
         Console.WriteLine($"{index+1}. {s}");
         index++;
     }
-    
+
     while (runProgram)
     {
-        string paySelect = Console.ReadLine().ToLower().Trim();
-        if (int.TryParse(paySelect, out int userInput) && userInput <= Cart.paymentMethod.Count && userInput > 0)
+        while (runPayment)
         {
-            
-            //while (userInput > Cart.paymentMethod.Count || userInput < 0)
-            //{
-            //    Console.WriteLine("Please enter a valid input");
-            //    paySelect = Console.ReadLine().ToLower().Trim();
-                
-            //}
-            userInput--;
-            choice = Cart.paymentMethod[userInput];
-            // Console.WriteLine(choice);
-        }
-        else if (Cart.paymentMethod.Any(p => p.Equals(paySelect, StringComparison.OrdinalIgnoreCase)))
-        {
-            choice = paySelect;
-            
-        }
-        else
-        {
-            Console.WriteLine("Invalid Input, Please try again");
-            continue;
-            
-            
+            string paySelect = Console.ReadLine().ToLower().Trim();
+            if (int.TryParse(paySelect, out int userInput) && userInput <= Cart.paymentMethod.Count && userInput > 0)
+            {
+
+                //while (userInput > Cart.paymentMethod.Count || userInput < 0)
+                //{
+                //    Console.WriteLine("Please enter a valid input");
+                //    paySelect = Console.ReadLine().ToLower().Trim();
+
+                //}
+                userInput--;
+                choice = Cart.paymentMethod[userInput];
+                // Console.WriteLine(choice);
+                runPayment = false;
+            }
+            else if (Cart.paymentMethod.Any(p => p.Equals(paySelect, StringComparison.OrdinalIgnoreCase)))
+            {
+                choice = paySelect;
+                runPayment = false;
+
+            }
+            else
+            {
+                Console.WriteLine("Invalid Input. Please enter a valid payment method.");
+                continue;
+            }
         }
         if (choice == "cash")
         {
