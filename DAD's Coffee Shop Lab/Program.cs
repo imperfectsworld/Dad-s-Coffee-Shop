@@ -22,13 +22,15 @@ if (!File.Exists(filePath))
 bool orderProgram = true;
 while (orderProgram)
 {
+    Console.WriteLine("DAD's Coffee Roasters Cafe");
+    Console.WriteLine("=====================================================================================================");
     //Menu print
     Coffee.ListProducts();
     Console.WriteLine("Enter the Menu(number /Coffee Name)");
     string? selection = Console.ReadLine();
     int input;
-    while (selection != "employee")
-    {
+
+           
         //input order
         if (int.TryParse(selection, out input))
         {
@@ -70,24 +72,7 @@ while (orderProgram)
         }
     }
 
-    Console.WriteLine("Please enter your Employee ID");
-    string? ID = Console.ReadLine();
-    int IDnum;
-    int password;
-    if (int.TryParse(ID, out IDnum))
-    {
-        Console.WriteLine("Please enter your password");
-    }
-    string? pass = Console.ReadLine();
-    if (int.TryParse(pass, out password))
-    {
-        if (IDnum == 0 && password == 0)
-        {
-            foreach (var p in Coffee.products)
-            { Console.WriteLine(p.Name); }
-        }
-    }
-}
+
 
 static void ChoosePayment(double pay,double tip)
 {
