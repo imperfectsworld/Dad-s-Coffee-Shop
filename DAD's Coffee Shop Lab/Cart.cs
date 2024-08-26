@@ -31,7 +31,7 @@ namespace DAD_s_Coffee_Shop_Lab
 
         public override string ToString()
         {
-            return String.Format("{0,20} {1,20} {2,20} {3,20}", $"{Product.Name}|", $"{Product.Price}| , {Quantity}|, {Rate}");
+            return String.Format("{0,-20} {1,20\t} {2,20\t} {3,20\t}", $"{Product.Name}|", $"{Product.Price}| , {Quantity}|, {Rate}");
         }
 
 

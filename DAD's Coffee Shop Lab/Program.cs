@@ -25,47 +25,50 @@ if (!File.Exists(filePath))
     }
     tempCoffee.Close();
 }
+bool employee = StaticLecture.Validator.GetContinue("Employee Login?", "y", "n");
+Console.Clear();
+while (employee == true)
+{
+    Console.WriteLine("Please enter your Employee ID");
+    string? ID = Console.ReadLine();
+    int IDnum;
+    int password;
+    if (int.TryParse(ID, out IDnum))
+    {
+        Console.WriteLine("Please enter your password");
+    }
+    string? pass = Console.ReadLine();
+    if (int.TryParse(pass, out password))
+    {
+        if (IDnum == 0 && password == 0)
+        {
+            Console.WriteLine("DAD's Coffee Roasters Cafe");
+            Console.WriteLine("================================");
+            Console.WriteLine(String.Format("\t{0,30}\t {1,10}\t {2,15}\t", "Stock Item", "Quanity", "Cost/lb"));
+            Inventory.ListInventory();
+            Console.WriteLine("Hit ENTER to continue to menu.");
+            Console.ReadLine();
+            Console.Clear();
+            employee = false;
+        }
+        else
+        {
+            Console.WriteLine("Invalid login credentials.");
+        }
+    }
+    else
+    {
+        Console.WriteLine("Invalid login credentials.");
+    }
+}
+
 bool orderProgram = true;
 while (orderProgram)
 {
-    bool employee = StaticLecture.Validator.GetContinue("Employee Login?", "y", "n");
-    while (employee == true)
-        {
-            Console.WriteLine("Please enter your Employee ID");
-            string? ID = Console.ReadLine();
-            int IDnum;
-            int password;
-            if (int.TryParse(ID, out IDnum))
-            {
-                Console.WriteLine("Please enter your password");
-            }
-            string? pass = Console.ReadLine();
-            if (int.TryParse(pass, out password))
-            {
-                if (IDnum == 0 && password == 0)
-                {
-                    Console.WriteLine("DAD's Coffee Roasters Cafe");
-                    Console.WriteLine("================================");
-                    Console.WriteLine(String.Format("\t{0,30}\t {1,10}\t {2,15}\t", "Stock Item", "Quanity", "Cost/lb"));
-                    Inventory.ListInventory();
-                    Console.WriteLine("Hit ENTER to continue to menu.");
-                    Console.ReadLine();
-                    Console.Clear();
-                    orderProgram = false;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid login credentials.");
-                }
-            }
-           else
-            {
-                Console.WriteLine("Invalid login credentials.");
-            }
-        }
     WindowsMediaPlayer player = new WindowsMediaPlayer();
-    player.URL = @"C:\\Users\\imper\\source\\repos\\DAD's Coffee Shop Lab\\DAD's Coffee Shop Lab\\bin\\Debug\\net8.0\\Ambient.wav\";
+    player.URL = @"C:\\Users\\imper\\source\\repos\\DAD's Coffee Shop Lab\\DAD's Coffee Shop Lab\\bin\\Debug\\net8.0\\Ambient1.wav\";
     player.controls.play();
+    
     
     Console.ForegroundColor = ConsoleColor.Yellow;
 
@@ -126,7 +129,7 @@ while (orderProgram)
         Console.ForegroundColor = ConsoleColor.Cyan;
         Console.WriteLine("Thank you for your patronage! Dont be a stranger! :)");
         Console.ResetColor();
-        player.controls.stop();
+       // player.controls.stop();
         Console.WriteLine("New customer: press ENTER.");
             Console.ReadLine();
             Console.Clear();
@@ -358,7 +361,7 @@ static void DisplayReceipt(double tip)
     foreach (Cart t in Cart.orderList)
     {
         total += t.Rate;
-        Console.WriteLine($"{t.Product.Name.PadRight(16)}" + $"{t.Quantity}\t\t{t.Rate}");
+        Console.WriteLine($"{t.Product.Name.PadRight(16)}" + $"{t.Quantity}\t{t.Rate}");
     }
     Console.WriteLine($"\nSubtotal: ${total}");
     Console.WriteLine($"Sales Tax: ${Math.Round(total * tax,2)}");

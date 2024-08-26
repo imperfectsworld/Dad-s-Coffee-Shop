@@ -49,7 +49,7 @@ namespace DAD_s_Coffee_Shop_Lab
         public override string ToString()
         {
 
-            return String.Format("\t{0,20} {1,20}\t {2,45}\t {3,10}\t", $"{Name}|", $" {Category}|", $" {Description}|", $" ${Price}|");
+            return String.Format("\t{0,20} {1,22}\t {2,45}\t {3,10}\t", $"{Name}|", $" {Category}|", $" {Description}|", $" ${Price}|");
         }
 
 
