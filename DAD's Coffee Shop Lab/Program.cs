@@ -25,7 +25,7 @@ if (!File.Exists(filePath))
 
 
 */
-
+double tip = 0;
 if (!File.Exists(filePath))
 {
     StreamWriter tempCoffee = new StreamWriter(filePath);
@@ -141,19 +141,24 @@ static void ChoosePayment(double pay)
                 balance = cash - pay;
                 if (balance < 0)
                 {
-                    Console.WriteLine($"You still owe {-balance} Please enter the amount:");
-                    double newbalance = StaticLecture.Validator.GetInputDouble();
-                    double change = newbalance - balance;
+                    Console.WriteLine($"You still owe {Math.Abs(Math.Round(balance, 2))} Please enter the amount:");
+                    double newbalance = StaticLecture.Validator.GetPositiveInputDouble();
+                    double total = newbalance + cash;
+                    double change = total - pay;
                     if (change >= 0)
                     {
-                        Console.WriteLine($"Your Change:${change}");
+                        Console.WriteLine($"Your Change:${Math.Round(change, 2)}");
                         IsValid = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"You still owe {Math.Abs(Math.Round(change, 2))} Please enter the amount:");
                     }
 
                 }
                 else
                 {
-                    Console.WriteLine($"Your Change:${balance}");
+                    Console.WriteLine($"Your Change:${Math.Round(balance,2)}");
                     IsValid = false;
                 }
 
@@ -247,7 +252,7 @@ static double GetTotal()
     Console.WriteLine("Enter a tip:");
     double tip = StaticLecture.Validator.GetPositiveInputDouble();
     grandTotal = total + (total * tax) + tip;
-    Console.WriteLine($"\nTotal: {grandTotal}");
+    Console.WriteLine($"\nTotal: {Math.Round(grandTotal,2)}");
 
     return grandTotal;
 }
@@ -269,3 +274,25 @@ static double GetTotal()
         }
 
     }
+static void DisplayRecipt()
+{
+    double total = 0;
+    double tax = 0.06;
+    double grandTotal = 0;
+    Console.WriteLine("DAD's Coffee Roasters Cafe");
+    Console.WriteLine("================================");
+    Console.WriteLine("Name".PadRight(16) + "Quantity\t" + "Subtotal");
+    foreach (Cart t in Cart.orderList)
+    {
+        total += t.Rate;
+        Console.WriteLine($"{t.Product.Name.PadRight(16)}" + $"{t.Quantity}\t\t{t.Rate}");
+    }
+    Console.WriteLine($"\nSubtotal: ${total}");
+    Console.WriteLine($"Sales Tax: {total * tax}");
+    Console.WriteLine("Enter a tip:");
+    double tip = StaticLecture.Validator.GetPositiveInputDouble();
+    grandTotal = total + (total * tax) + tip;
+    Console.WriteLine($"\nTotal: {Math.Round(grandTotal, 2)}");
+
+    
+}
