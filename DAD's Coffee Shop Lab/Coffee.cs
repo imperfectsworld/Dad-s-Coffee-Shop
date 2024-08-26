@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
@@ -45,16 +46,20 @@ namespace DAD_s_Coffee_Shop_Lab
         
         public override string ToString()
         {
-            return String.Format("{0,20} {1,20} {2,45} {3,10}", $"{Name}|", $" {Category}|", $" {Description}|", $" ${Price}|");
+
+            return String.Format("\t{0,20} {1,20}\t {2,45}\t {3,10}\t", $"{Name}|", $" {Category}|", $" {Description}|", $" ${Price}|");
         }
 
 
         public static void ListProducts()
         {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             for (int i = 0; i < products.Count; i++)
             {
+                
                 Console.WriteLine($"{i + 1}. {products[i]}");
             }
+            Console.ResetColor();
         }
 
 

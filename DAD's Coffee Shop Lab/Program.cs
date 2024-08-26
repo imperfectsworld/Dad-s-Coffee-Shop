@@ -7,6 +7,11 @@ using StaticLecture;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using System.Transactions;
+using System.Net.WebSockets;
+using WMPLib;
+
+
+
 List<Cart> SCart = new List<Cart>();
 string filePath = "../../../coffee.txt";
 
@@ -22,10 +27,20 @@ if (!File.Exists(filePath))
 bool orderProgram = true;
 while (orderProgram)
 {
+    WindowsMediaPlayer player = new WindowsMediaPlayer();
+    player.URL = @"C:\\Users\\imper\\source\\repos\\DAD's Coffee Shop Lab\\DAD's Coffee Shop Lab\\bin\\Debug\\net8.0\\Ambient.wav\";
+    player.controls.play();
+    
+    Console.ForegroundColor = ConsoleColor.Yellow;
+
     Console.WriteLine("DAD's Coffee Roasters Cafe");
-    Console.WriteLine("=====================================================================================================");
+    Console.ForegroundColor = ConsoleColor.Magenta;
+    Console.ResetColor();
+    Console.WriteLine("=====================================================================================================================");
+    Console.ResetColor();
     //Menu print
     Coffee.ListProducts();
+    Console.WriteLine("");
     Console.WriteLine("Enter the Menu(number /Coffee Name)");
     string? selection = Console.ReadLine();
     int input;
@@ -36,7 +51,9 @@ while (orderProgram)
         {
             while (input > Coffee.products.Count || input < 1)
             {
-                Console.WriteLine("Enter the valid input");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Enter the valid input");
+            Console.ResetColor();
                 input = int.Parse(Console.ReadLine());
             }
             input--;
@@ -54,17 +71,25 @@ while (orderProgram)
         }
         else
         {
-            Console.WriteLine("InValid input ");
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("InValid input ");
+        Console.ResetColor();
             continue;
         }
-        orderProgram = StaticLecture.Validator.GetContinue("Would you like to add another item to your order?", "yes", "no");
+    Console.ForegroundColor = ConsoleColor.Blue;
+    orderProgram = StaticLecture.Validator.GetContinue("Would you like to add another item to your order?", "yes", "no");
+    Console.ResetColor();
         Console.Clear();
         if (orderProgram == false)
         {
             Console.Clear();
             (double finalTotal, double tip) = GetTotal();
             ChoosePayment(finalTotal, tip);
-            Console.WriteLine("New customer: press ENTER.");
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine("Thank you for your patronage! Dont be a stranger! :)");
+        Console.ResetColor();
+        player.controls.stop();
+        Console.WriteLine("New customer: press ENTER.");
             Console.ReadLine();
             Console.Clear();
             Cart.orderList.Clear();
@@ -123,7 +148,9 @@ static void ChoosePayment(double pay,double tip)
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Invalid Input. Please enter a valid payment method.");
+                Console.ResetColor();
                 continue;
             }
         }
@@ -146,10 +173,12 @@ static void ChoosePayment(double pay,double tip)
                     IsValid = false;
                 }
             }
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Your Change:${Math.Round(balance, 2)}. Hit ENTER to continue.");
             Console.ReadLine();
             Console.Clear();
             Console.WriteLine($"Your Change: ${Math.Round(balance, 2)}");
+            Console.ResetColor();
             DisplayReceipt(tip);
             runProgram = false;
         }
@@ -165,12 +194,16 @@ static void ChoosePayment(double pay,double tip)
                 Regex regex = new Regex(pattern);
                 if (Regex.IsMatch(checkNum, pattern))
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Check accepted!");
+                    Console.ResetColor();
                     IsValid = false;
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Please enter a valid check Number:");
+                    Console.ResetColor();
                     IsValid = true;
                 }
             }
@@ -201,13 +234,17 @@ static void ChoosePayment(double pay,double tip)
                 Regex regex = new Regex(pattern);
                 if (Regex.IsMatch(cardNum, pattern)&& Regex.IsMatch(expiration,datePattern) && Regex.IsMatch(cvv,cvvPattern))
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Card accepted!");
+                    Console.ResetColor();
                     
                     IsValid = false;
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Please enter a valid Card Number:");
+                    Console.ResetColor();
                     IsValid = true;
                 }
             }
@@ -219,7 +256,10 @@ static void ChoosePayment(double pay,double tip)
         }
         else
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Invalid Input");
+            Console.ResetColor();
+
             runProgram = true;
 
         }
@@ -243,7 +283,7 @@ static (double grandTotal,double tip) GetTotal()
         Console.WriteLine($"{t.Product.Name.PadRight(16)}" + $"{t.Quantity}\t\t{t.Rate}");
     }
     Console.WriteLine($"\nSubtotal: ${total}");
-    Console.WriteLine($"Sales Tax: ${total * tax}");
+    Console.WriteLine($"Sales Tax: ${Math.Round(total * tax, 2)}");
     Console.Write("Enter a tip: $");
     double tip = StaticLecture.Validator.GetPositiveInputDouble();
     grandTotal = total + (total * tax) + tip;
@@ -283,7 +323,7 @@ static void DisplayReceipt(double tip)
         Console.WriteLine($"{t.Product.Name.PadRight(16)}" + $"{t.Quantity}\t\t{t.Rate}");
     }
     Console.WriteLine($"\nSubtotal: ${total}");
-    Console.WriteLine($"Sales Tax: ${total * tax}");
+    Console.WriteLine($"Sales Tax: ${Math.Round(total * tax,2)}");
     Console.WriteLine($"Tip: ${tip}");
     grandTotal = total + (total * tax) + tip;
     Console.WriteLine($"\nTotal: ${Math.Round(grandTotal, 2)}");
