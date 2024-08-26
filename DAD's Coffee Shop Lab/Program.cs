@@ -163,7 +163,7 @@ static void ChoosePayment(double pay,double tip)
                 }
 
             }
-            DisplayRecipt(tip);
+            DisplayReceipt(tip);
             runProgram = false;
 
         }
@@ -188,7 +188,7 @@ static void ChoosePayment(double pay,double tip)
                 }
             }
             Console.Clear();
-            DisplayRecipt(tip);
+            DisplayReceipt(tip);
             string last = checkNum.Substring(checkNum.Length - 4);
             Console.WriteLine($"Check Number : ****{last}");
             runProgram = false;
@@ -224,7 +224,7 @@ static void ChoosePayment(double pay,double tip)
                     IsValid = true;
                 }
             }
-            DisplayRecipt(tip);
+            DisplayReceipt(tip);
             runProgram = false;
         }
         else
@@ -279,7 +279,7 @@ static (double grandTotal,double tip) GetTotal()
         }
 
     }
-static void DisplayRecipt(double tip)
+static void DisplayReceipt(double tip)
 {
     double total = 0;
     double tax = 0.06;
