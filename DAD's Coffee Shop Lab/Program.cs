@@ -99,9 +99,9 @@ while (orderProgram)
         Console.WriteLine("New customer: press ENTER.");
             Console.ReadLine();
             Console.Clear();
-            
-         EmployeeLogin();
+
         Cart.orderList.Clear();
+        EmployeeLogin();
         orderProgram = true;
 
         }
