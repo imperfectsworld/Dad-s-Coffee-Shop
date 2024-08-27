@@ -63,14 +63,12 @@ while (orderProgram)
             input--;
             Console.WriteLine($"{Coffee.products[input]}");
             Coffee selected = Coffee.products[input];
-            Inventory.DrinkConstructor(selected, Coffee.products, Inventory.stock);
             DisplayCart(selected);
         }
 
         else if ((Coffee.products.Any(p => p.Name.Equals(selection, StringComparison.OrdinalIgnoreCase))))
         {
             Coffee selected = Coffee.products.Find(p => p.Name.Equals(selection, StringComparison.OrdinalIgnoreCase));
-            Inventory.DrinkConstructor(selected,Coffee.products, Inventory.stock);
             Console.WriteLine($"{selected}");
             DisplayCart(selected);
 
@@ -106,8 +104,6 @@ while (orderProgram)
 
         }
     }
-
-
 
 static void ChoosePayment(double pay,double tip)
 {
@@ -308,12 +304,13 @@ static (double grandTotal,double tip) GetTotal()
     return (grandTotal,tip);
 }
 
-static void DisplayCart(Coffee order)
+static void DisplayCart(Coffee selected)
     {
         Console.WriteLine("Enter the Quantity:");
         int quantity = StaticLecture.Validator.GetPositiveInputInt();
-        double total = order.Price * quantity;
-        Cart.orderList.Add(new Cart(quantity, order, total));
+        Inventory.DrinkConstructor(selected, Coffee.products, Inventory.stock, quantity);
+        double total = selected.Price * quantity;
+        Cart.orderList.Add(new Cart(quantity, selected, total));
         Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine("================================================================");
         Console.ResetColor();

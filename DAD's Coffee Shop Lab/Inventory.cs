@@ -59,99 +59,103 @@ namespace Workshop_coffeeProjectTest
             }
         }
 
-        public static void DrinkConstructor(Coffee selected, List<Coffee> products, List<Inventory> stock)
+        public static void DrinkConstructor(Coffee selected, List<Coffee> products, List<Inventory> stock, int quantity)
         {
             string sold = "";
             foreach (Coffee item in products)
             {
-                if (selected == item)
+                if (selected.Name == item.Name)
+                {
                     sold = item.Name.ToLower();
-                break;
+                }
             }
-            if (sold == "espresso")
+            for (int i = 0; i < quantity; i++)
             {
-                Inventory.stock.FirstOrDefault(s => s.Component == "espresso beans").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
-            }
-            else if (sold == "cappuccino")
-            {
-                Inventory.stock.FirstOrDefault(s => s.Component == "espresso beans").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "2% milk").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
-            }
-            else if (sold == "latte")
-            {
-                Inventory.stock.FirstOrDefault(s => s.Component == "espresso beans").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "2% milk").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
-            }
-            else if (sold == "mocha")
-            {
-                Inventory.stock.FirstOrDefault(s => s.Component == "espresso beans").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "2% milk").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "chocolate syrup").Backstock--;
-            }
-            else if (sold == "macchiato")
-            {
-                Inventory.stock.FirstOrDefault(s => s.Component == "espresso beans").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "2% milk").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
-            }
-            else if (sold == "americano")
-            {
-                Inventory.stock.FirstOrDefault(s => s.Component == "espresso beans").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
-            }
-            else if (sold == "chai latte")
-            {
-                Inventory.stock.FirstOrDefault(s => s.Component == "chai concentrate").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "2% milk").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
-            }
-            else if (sold == "green tea")
-            {
-                Inventory.stock.FirstOrDefault(s => s.Component == "ceremony grade matcha").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
-            }
-            else if (sold == "herbal tea")
-            {
-                Inventory.stock.FirstOrDefault(s => s.Component == "loose leaf herbal collection").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
-            }
-            else if (sold == "hot chocolate")
-            {
-                Inventory.stock.FirstOrDefault(s => s.Component == "swiss hot chocolate powder").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "2% milk").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
-            }
-            else if (sold == "iced coffee")
-            {
-                Inventory.stock.FirstOrDefault(s => s.Component == "refigerated drip coffee").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
-            }
-            else if (sold == "cold brew")
-            {
-                Inventory.stock.FirstOrDefault(s => s.Component == "in-house cold brew concentrate").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
-            }
-            else if (sold == "iced tea")
-            {
-                Inventory.stock.FirstOrDefault(s => s.Component == "chilled in-house black tea").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
-                Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                if (sold == "espresso")
+                {
+                    Inventory.stock.FirstOrDefault(s => s.Component == "espresso beans").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                }
+                else if (sold == "cappuccino")
+                {
+                    Inventory.stock.FirstOrDefault(s => s.Component == "espresso beans").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "2% milk").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                }
+                else if (sold == "latte")
+                {
+                    Inventory.stock.FirstOrDefault(s => s.Component == "espresso beans").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "2% milk").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                }
+                else if (sold == "mocha")
+                {
+                    Inventory.stock.FirstOrDefault(s => s.Component == "espresso beans").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "2% milk").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "chocolate syrup").Backstock--;
+                }
+                else if (sold == "macchiato")
+                {
+                    Inventory.stock.FirstOrDefault(s => s.Component == "espresso beans").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "2% milk").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                }
+                else if (sold == "americano")
+                {
+                    Inventory.stock.FirstOrDefault(s => s.Component == "espresso beans").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                }
+                else if (sold == "chai latte")
+                {
+                    Inventory.stock.FirstOrDefault(s => s.Component == "chai concentrate").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "2% milk").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                }
+                else if (sold == "green tea")
+                {
+                    Inventory.stock.FirstOrDefault(s => s.Component == "ceremony grade matcha").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                }
+                else if (sold == "herbal tea")
+                {
+                    Inventory.stock.FirstOrDefault(s => s.Component == "loose leaf herbal collection").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                }
+                else if (sold == "hot chocolate")
+                {
+                    Inventory.stock.FirstOrDefault(s => s.Component == "swiss hot chocolate powder").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "2% milk").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                }
+                else if (sold == "iced coffee")
+                {
+                    Inventory.stock.FirstOrDefault(s => s.Component == "refigerated drip coffee").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                }
+                else if (sold == "cold brew")
+                {
+                    Inventory.stock.FirstOrDefault(s => s.Component == "in-house cold brew concentrate").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                }
+                else if (sold == "iced tea")
+                {
+                    Inventory.stock.FirstOrDefault(s => s.Component == "chilled in-house black tea").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
+                }
             }
         }
     }
