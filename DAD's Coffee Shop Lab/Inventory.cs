@@ -59,7 +59,7 @@ namespace Workshop_coffeeProjectTest
             }
         }
 
-        public static void DrinkConstructor(Coffee selected, List<Coffee> products, List<Inventory> stockd)
+        public static void DrinkConstructor(Coffee selected, List<Coffee> products, List<Inventory> stock)
         {
             string sold = "";
             foreach (Coffee item in products)
