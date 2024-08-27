@@ -51,7 +51,9 @@ namespace StaticLecture
             int result = -1;
             while (int.TryParse(Console.ReadLine(), out result) == false || result <= 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Invalid input. Try again with a positive number.");
+                Console.ResetColor();
             }
             return result;
         }
@@ -61,7 +63,9 @@ namespace StaticLecture
             double result = -1;
             while (double.TryParse(Console.ReadLine(), out result) == false || result <= 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Invalid input. Try again with a positive number.");
+                Console.ResetColor();
             }
             return result;
         }

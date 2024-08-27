@@ -25,56 +25,21 @@ if (!File.Exists(filePath))
     }
     tempCoffee.Close();
 }
-bool employee = StaticLecture.Validator.GetContinue("Employee Login?", "y", "n");
-Console.Clear();
-while (employee == true)
-{
-    Console.WriteLine("Please enter your Employee ID");
-    string? ID = Console.ReadLine();
-    int IDnum;
-    int password;
-    if (int.TryParse(ID, out IDnum))
-    {
-        Console.WriteLine("Please enter your password");
-    }
-    string? pass = Console.ReadLine();
-    if (int.TryParse(pass, out password))
-    {
-        if (IDnum == 0 && password == 0)
-        {
-            Console.WriteLine("DAD's Coffee Roasters Cafe");
-            Console.WriteLine("================================");
-            Console.WriteLine(String.Format("\t{0,30}\t {1,10}\t {2,15}\t", "Stock Item", "Quanity", "Cost/lb"));
-            Inventory.ListInventory();
-            Console.WriteLine("Hit ENTER to continue to menu.");
-            Console.ReadLine();
-            Console.Clear();
-            employee = false;
-        }
-        else
-        {
-            Console.WriteLine("Invalid login credentials.");
-        }
-    }
-    else
-    {
-        Console.WriteLine("Invalid login credentials.");
-    }
-}
+
 
 bool orderProgram = true;
+EmployeeLogin();
 while (orderProgram)
 {
+    
     WindowsMediaPlayer player = new WindowsMediaPlayer();
-    player.URL = @"C:\\Users\\imper\\source\\repos\\DAD's Coffee Shop Lab\\DAD's Coffee Shop Lab\\bin\\Debug\\net8.0\\Ambient1.wav\";
+    player.URL = @"C:\\Users\\imper\\source\\repos\\DAD's Coffee Shop Lab\\DAD's Coffee Shop Lab\\bin\\Debug\\net8.0\\Ambient2.wav\";
     player.controls.play();
     
     
     Console.ForegroundColor = ConsoleColor.Yellow;
-
     Console.WriteLine("DAD's Coffee Roasters Cafe");
     Console.ForegroundColor = ConsoleColor.Magenta;
-    Console.ResetColor();
     Console.WriteLine("=====================================================================================================================");
     Console.ResetColor();
     //Menu print
@@ -98,14 +63,14 @@ while (orderProgram)
             input--;
             Console.WriteLine($"{Coffee.products[input]}");
             Coffee selected = Coffee.products[input];
-            Inventory.DrinkConstructor(selected);
+            Inventory.DrinkConstructor(selected, Coffee.products, Inventory.stock);
             DisplayCart(selected);
         }
 
         else if ((Coffee.products.Any(p => p.Name.Equals(selection, StringComparison.OrdinalIgnoreCase))))
         {
             Coffee selected = Coffee.products.Find(p => p.Name.Equals(selection, StringComparison.OrdinalIgnoreCase));
-            Inventory.DrinkConstructor(selected);
+            Inventory.DrinkConstructor(selected,Coffee.products, Inventory.stock);
             Console.WriteLine($"{selected}");
             DisplayCart(selected);
 
@@ -115,6 +80,7 @@ while (orderProgram)
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("InValid input ");
         Console.ResetColor();
+        Console.Clear();
             continue;
         }
     Console.ForegroundColor = ConsoleColor.Blue;
@@ -133,8 +99,11 @@ while (orderProgram)
         Console.WriteLine("New customer: press ENTER.");
             Console.ReadLine();
             Console.Clear();
-            Cart.orderList.Clear();
-            orderProgram = true;
+            
+         EmployeeLogin();
+        Cart.orderList.Clear();
+        orderProgram = true;
+
         }
     }
 
@@ -206,7 +175,9 @@ static void ChoosePayment(double pay,double tip)
                 balance = total - pay;
                 if (balance < 0)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"You still owe {Math.Abs(Math.Round(balance, 2))} Please enter the amount:");
+                    Console.ResetColor();
                 }
                 else
                 {
@@ -315,8 +286,12 @@ static (double grandTotal,double tip) GetTotal()
     double total = 0;
     double tax = 0.06;
     double grandTotal = 0;
+    Console.ForegroundColor = ConsoleColor.Yellow;
     Console.WriteLine("DAD's Coffee Roasters Cafe");
+    Console.ResetColor();
+    Console.ForegroundColor = ConsoleColor.Magenta;
     Console.WriteLine("================================================================");
+    Console.ResetColor();
     Console.WriteLine("Name".PadRight(16) + "Quantity\t" + "Subtotal");
     foreach (Cart t in Cart.orderList)
     {
@@ -339,13 +314,15 @@ static void DisplayCart(Coffee order)
         int quantity = StaticLecture.Validator.GetPositiveInputInt();
         double total = order.Price * quantity;
         Cart.orderList.Add(new Cart(quantity, order, total));
+        Console.ForegroundColor = ConsoleColor.Magenta;
         Console.WriteLine("================================================================");
+        Console.ResetColor();
         Console.WriteLine("Name".PadRight(16) + "Quantity\t" + "Subtotal");
         foreach (Cart o in Cart.orderList)
         {
-
-            Console.WriteLine($"{o.Product.Name.PadRight(16)} {o.Quantity}\t\t${o.Rate}");
-
+        Console.ForegroundColor = ConsoleColor.DarkCyan;
+        Console.WriteLine($"{o.Product.Name.PadRight(16)} {o.Quantity}\t\t${o.Rate}");
+        Console.ResetColor();
 
         }
 
@@ -355,8 +332,12 @@ static void DisplayReceipt(double tip)
     double total = 0;
     double tax = 0.06;
     double grandTotal = 0;
+    Console.ForegroundColor = ConsoleColor.Yellow;
     Console.WriteLine("DAD's Coffee Roasters Cafe");
+    Console.ResetColor();
+    Console.ForegroundColor = ConsoleColor.Magenta;
     Console.WriteLine("================================================================");
+    Console.ResetColor();
     Console.WriteLine("Name".PadRight(16) + "Quantity\t" + "Subtotal");
     foreach (Cart t in Cart.orderList)
     {
@@ -370,4 +351,71 @@ static void DisplayReceipt(double tip)
     Console.WriteLine($"\nTotal: ${Math.Round(grandTotal, 2)}");
 
     
+}
+
+static string PasswordProtect ()
+{
+    var pass = string.Empty;
+    ConsoleKey key;
+    do
+    {
+        var keyInfo = Console.ReadKey(intercept: true);
+        key = keyInfo.Key;
+
+        if (key == ConsoleKey.Backspace && pass.Length > 0)
+        {
+            Console.Write("\b \b");
+            pass = pass[0..^1];
+        }
+        else if (!char.IsControl(keyInfo.KeyChar))
+        {
+            Console.Write("*");
+            pass += keyInfo.KeyChar;
+        }
+    } while (key != ConsoleKey.Enter);
+
+    return pass;
+}
+
+
+static void EmployeeLogin()
+{
+
+    bool employee = StaticLecture.Validator.GetContinue("Employee Login?", "y", "n");
+    Console.Clear();
+    while (employee == true)
+    {
+        Console.WriteLine("Please enter your Employee ID");
+        string? ID = Console.ReadLine();
+        int IDnum;
+        int password;
+        if (int.TryParse(ID, out IDnum))
+        {
+            Console.WriteLine("Please enter your password");
+        }
+        string? pass = PasswordProtect();
+
+        if (int.TryParse(pass, out password))
+        {
+            if (IDnum == 001 && password == 123)
+            {
+                Console.WriteLine("DAD's Coffee Roasters Cafe");
+                Console.WriteLine("================================");
+                Console.WriteLine(String.Format("\t{0,30}\t {1,10}\t {2,15}\t", "Stock Item", "Quanity", "Cost/lb"));
+                Inventory.ListInventory();
+                Console.WriteLine("Hit ENTER to continue to menu.");
+                Console.ReadLine();
+                Console.Clear();
+                employee = false;
+            }
+            else
+            {
+                Console.WriteLine("Invalid login credentials.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Invalid login credentials.");
+        }
+    }
 }
