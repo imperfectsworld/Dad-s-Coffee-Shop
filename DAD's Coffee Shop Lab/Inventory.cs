@@ -146,7 +146,7 @@ namespace Workshop_coffeeProjectTest
                 }
                 else if (sold == "cold brew")
                 {
-                    Inventory.stock.FirstOrDefault(s => s.Component == "in-house cold brew concentrate").Backstock--;
+                    Inventory.stock.FirstOrDefault(s => s.Component == "cold brew concentrate").Backstock--;
                     Inventory.stock.FirstOrDefault(s => s.Component == "cups").Backstock--;
                     Inventory.stock.FirstOrDefault(s => s.Component == "lids").Backstock--;
                 }
