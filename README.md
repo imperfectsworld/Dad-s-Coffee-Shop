@@ -1,4 +1,7 @@
 # Dad's Coffee Shop
+![screenshot__6_](https://github.com/user-attachments/assets/5b6b10a4-a562-4218-a7c2-43f3250b5f74)
+
+![screenshot__11_](https://github.com/user-attachments/assets/09adf9ea-4d3a-4676-bc98-bcfd0bff6b15)
 
 ## Project Overview
 **Dad's Coffee Shop** is a cash register or self-service terminal designed for small retail locations such as a coffee shop, fast food restaurant, or small store. This solution allows users to select products, enter quantities, calculate totals, and handle various payment methods. After each transaction, a receipt is generated, and the system returns to the main menu for new orders.
@@ -35,7 +38,6 @@ Each product is stored in a list and follows the below structure:
 
 ## Technologies Used
 - C# for backend logic.
-- .NET Core for building the API (if applicable).
 - Console or UI for user interaction.
   
 ## How to Run
